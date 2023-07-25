@@ -1,10 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./slices/counter.slice";
+import quizReducer from '@/store/slices/quiz.slice'
+import { quizApi } from "@/services/quiz.services";
 
 export const store = configureStore({
     reducer: {
-        counterReducer,
+        quizReducer,
+        [quizApi.reducerPath]: quizApi.reducer,
     },
+
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(quizApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
