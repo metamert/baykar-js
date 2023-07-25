@@ -1,24 +1,33 @@
 "use client";
 
-import { decrement, increment, reset } from "@/store/slices/counter.slice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { Quiz } from "./components/quiz/quiz";
+import { QuizStep } from "./components/quiz/quiz-step";
+import { cn } from "./lib/utils";
+
+import { useGetQuizDataQuery } from "./services/quiz.services";
+
+function DemoContainer({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center [&>div]:w-full",
+        className
+      )}
+      {...props}
+    />
+  );
+}
 
 export default function Home() {
-  const count = useAppSelector((state) => state.counterReducer.value);
-  const dispatch = useAppDispatch();
-
   return (
     <main style={{ maxWidth: 1200, marginInline: "auto", padding: 20 }}>
       <div style={{ marginBottom: "4rem", textAlign: "center" }}>
-        <h4 style={{ marginBottom: 16 }}>{count}</h4>
-        <button onClick={() => dispatch(increment())}>increment</button>
-        <button
-          onClick={() => dispatch(decrement())}
-          style={{ marginInline: 16 }}
-        >
-          decrement
-        </button>
-        <button onClick={() => dispatch(reset())}>reset</button>
+        <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
+          <Quiz />
+        </div>
       </div>
     </main>
   );
